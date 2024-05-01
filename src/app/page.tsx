@@ -1,6 +1,9 @@
 "use client";
 import "@copilotkit/react-ui/styles.css";
 
+import FullCalendar from '@fullcalendar/react'
+import dayGridPlugin from '@fullcalendar/daygrid'
+
 import React, { useState } from "react";
 import Sidebar from "./components/Sidebar";
 import SingleSpreadsheet from "./components/SingleSpreadsheet";
@@ -43,6 +46,7 @@ const Main = () => {
       ],
     },
   ]);
+
 
   const [selectedSpreadsheetIndex, setSelectedSpreadsheetIndex] = useState(0);
 
@@ -110,7 +114,7 @@ const Main = () => {
         selectedSpreadsheetIndex={selectedSpreadsheetIndex}
         setSelectedSpreadsheetIndex={setSelectedSpreadsheetIndex}
       />
-      <SingleSpreadsheet
+      {/* <SingleSpreadsheet
         spreadsheet={spreadsheets[selectedSpreadsheetIndex]}
         setSpreadsheet={(spreadsheet) => {
           setSpreadsheets((prev) => {
@@ -120,9 +124,39 @@ const Main = () => {
             return newSpreadsheets;
           });
         }}
-      />
+      /> */}
+      <DemoApp />
     </div>
   );
 };
+
+const events = [
+  { title: 'Meeting', start: new Date() }
+]
+
+function DemoApp() {
+  return (
+    <div>
+      <h1>Demo App</h1>
+      <FullCalendar
+        plugins={[dayGridPlugin]}
+        initialView='dayGridMonth'
+        weekends={false}
+        events={events}
+        eventContent={renderEventContent}
+      />
+    </div>
+  )
+}
+
+// a custom render function
+function renderEventContent(eventInfo: any) {
+  return (
+    <>
+      <b>{eventInfo.timeText}</b>
+      <i>{eventInfo.event.title}</i>
+    </>
+  )
+}
 
 export default HomePage;
