@@ -35,28 +35,22 @@ const HomePage = () => {
 };
 
 const Main = () => {
-  const [spreadsheets, setSpreadsheets] = React.useState<SpreadsheetData[]>([
-    {
-      title: "Spreadsheet 1",
-      rows: [
-        [{ value: "" }, { value: "" }, { value: "" }],
-        [{ value: "" }, { value: "" }, { value: "" }],
-        [{ value: "" }, { value: "" }, { value: "" }],
-      ],
-    },
-  ]);
+
+  const [events, setEvents] = useState({
+
+  });
 
 
-  const [selectedSpreadsheetIndex, setSelectedSpreadsheetIndex] = useState(0);
+  // create a copilotAction to create a calendar whenever the user makes a request.
 
   useCopilotAction({
-    name: "createSpreadsheet",
-    description: "Create a new  spreadsheet",
+    name: "createCalendarEvent",
+    description: "Create a new calendar event as specified by the user",
     parameters: [
       {
-        name: "rows",
-        type: "object[]",
-        description: "The rows of the spreadsheet",
+        name: "title",
+        type: "string",
+        description: "The title of the event",
         attributes: [
           {
             name: "cells",
@@ -72,66 +66,24 @@ const Main = () => {
           },
         ],
       },
-      {
-        name: "title",
-        type: "string",
-        description: "The title of the spreadsheet",
-      },
     ],
-    render: (props) => {
-      const { rows, title } = props.args;
-      const newRows = canonicalSpreadsheetData(rows);
 
-      return (
-        <PreviewSpreadsheetChanges
-          preCommitTitle="Create spreadsheet"
-          postCommitTitle="Spreadsheet created"
-          newRows={newRows}
-          commit={ (rows) => {
-            const newSpreadsheet: SpreadsheetData = {
-              title: title || "Untitled Spreadsheet",
-              rows: rows,
-            };
-            setSpreadsheets((prev) => [...prev, newSpreadsheet]);
-            setSelectedSpreadsheetIndex(spreadsheets.length);
-          }}
-        />
-      );
-    },
-    handler: ({ rows, title }) => {
+    render: "Creating the event for you...",
+    handler: () => {
       // Do nothing.
       // The preview component will optionally handle committing the changes.
     },
   });
 
-  useMakeCopilotReadable("Todays date is: " + new Date().toLocaleDateString());
+  useMakeCopilotReadable("The users events are: " + events);
 
   return (
     <div className="w-screen h-screen">
-      {/* <Sidebar
-        spreadsheets={spreadsheets}
-        selectedSpreadsheetIndex={selectedSpreadsheetIndex}
-        setSelectedSpreadsheetIndex={setSelectedSpreadsheetIndex}
-      /> */}
-      {/* <SingleSpreadsheet
-        spreadsheet={spreadsheets[selectedSpreadsheetIndex]}
-        setSpreadsheet={(spreadsheet) => {
-          setSpreadsheets((prev) => {
-            console.log("setSpreadsheet", spreadsheet);
-            const newSpreadsheets = [...prev];
-            newSpreadsheets[selectedSpreadsheetIndex] = spreadsheet;
-            return newSpreadsheets;
-          });
-        }}
-      /> */}
       <CalendarComponent />
     </div>
   );
 };
 
-const events = [
-  { title: 'Meeting', start: new Date() }
-]
 
 
 
