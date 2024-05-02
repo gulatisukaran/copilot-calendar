@@ -109,12 +109,12 @@ const Main = () => {
 
   return (
     <div className="flex">
-      <Sidebar
+      {/* <Sidebar
         spreadsheets={spreadsheets}
         selectedSpreadsheetIndex={selectedSpreadsheetIndex}
         setSelectedSpreadsheetIndex={setSelectedSpreadsheetIndex}
-      />
-      {/* <SingleSpreadsheet
+      /> */}
+      <SingleSpreadsheet
         spreadsheet={spreadsheets[selectedSpreadsheetIndex]}
         setSpreadsheet={(spreadsheet) => {
           setSpreadsheets((prev) => {
@@ -124,8 +124,8 @@ const Main = () => {
             return newSpreadsheets;
           });
         }}
-      /> */}
-      <DemoApp />
+      />
+      {/* <DemoApp /> */}
     </div>
   );
 };
