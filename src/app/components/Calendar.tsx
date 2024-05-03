@@ -16,6 +16,7 @@ export const CalendarComponent: React.FC<Props> = ({ events }: Props) => {
           initialView='dayGridMonth'
           weekends={true}
           events={events}
+          timeZone='local'
           eventContent={renderEventContent}
         />
       </div>
@@ -24,9 +25,11 @@ export const CalendarComponent: React.FC<Props> = ({ events }: Props) => {
   
   // a custom render function
   function renderEventContent(eventInfo: any) {
+    console.log(eventInfo.timeText)
     return (
       <div className="bg-[red]">
         <b>{eventInfo.timeText}m</b>
+        <div className='w-[2px]'/>
         <i>{eventInfo.event.title}</i>
       </div>
     )

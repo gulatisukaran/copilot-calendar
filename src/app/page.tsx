@@ -11,9 +11,6 @@ import { CopilotSidebar } from "@copilotkit/react-ui";
 import { INSTRUCTIONS } from "./instructions";
 import { Event } from "./types";
 
-
-
-
 const HomePage = () => {
   return (
     <CopilotKit url="/api/copilotkit">
@@ -32,11 +29,13 @@ const HomePage = () => {
 };
 
 const initialEvents: Event[] = [
-  { title: 'Meeting', start: new Date(), end: new Date("2024-05-5") },
-  { title: 'Hello', start: new Date("2024-05-3"), end: new Date("2024-05-5")  }
+  { title: 'Attend offline tech event', start: new Date(2024, 4, 3, 0, 0,0,  0), end: new Date(2024, 4, 5, 17, 30, 0, 0)},
+  { title: 'Friends\'s marriage', start: new Date(2024, 4, 3, 19+5, 30+30, 0, 0), end: new Date(2024, 4, 4, 12+5, 30+30, 0, 0)}
 ]
 
 const Main = () => {
+  console.log(new Date(2024, 4, 3, 19, 5, 0, 0));
+  console.log(new Date().toLocaleString());
 
   const [events, setEvents] = useState<Event[]>(initialEvents);
 
@@ -70,13 +69,16 @@ const Main = () => {
     ],
 
     render: "Creating the event for you...",
+
     handler: () => {
       // Do nothing.
       // The preview component will optionally handle committing the changes.
     },
   });
 
-  useMakeCopilotReadable("The users events are: " + JSON.stringify(events));
+
+
+  useMakeCopilotReadable("The users events are: " + JSON.stringify(events) + "In this string the time is in 24 hour format.");
 
   return (
     <div className="w-screen h-screen">
@@ -84,8 +86,6 @@ const Main = () => {
     </div>
   );
 };
-
-
 
 
 export default HomePage;
