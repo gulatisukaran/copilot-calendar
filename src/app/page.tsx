@@ -17,7 +17,7 @@ const HomePage = () => {
       <CopilotSidebar
         instructions={INSTRUCTIONS}
         labels={{
-          initial: "Welcome to the calendar! How can I help you?",
+          initial: "Welcome to the calendar! How can I assist you today?",
         }}
         defaultOpen={true}
         clickOutsideToClose={false}
@@ -29,13 +29,26 @@ const HomePage = () => {
 };
 
 const initialEvents: Event[] = [
+  { title: 'Go to gym', start: new Date(2024, 4, 3, 6, 0, 0, 0), end: new Date(2024, 4, 3, 8, 30, 0, 0)},
+  { title: 'Go to gym', start: new Date(2024, 4, 4, 6, 0, 0, 0), end: new Date(2024, 4, 4, 8, 30, 0, 0)},
+  { title: 'Product Meeting with Anna', start: new Date(2024, 4, 3, 14, 0, 0, 0), end: new Date(2024, 4, 3, 17, 0, 0, 0)},
   { title: 'Attend offline tech event', start: new Date(2024, 4, 3, 0, 0,0,  0), end: new Date(2024, 4, 5, 17, 30, 0, 0)},
-  { title: 'Friends\'s marriage', start: new Date(2024, 4, 3, 19+5, 30+30, 0, 0), end: new Date(2024, 4, 4, 12+5, 30+30, 0, 0)}
 ]
+
+function convertToLocaleString(events: Event[]) {
+  return events.map(event => ({
+    title: event.title,
+    start: event.start.toLocaleString(),
+    end: event.end.toLocaleString()
+  }));
+}
+
 
 const Main = () => {
   console.log(new Date(2024, 4, 3, 19, 5, 0, 0));
   console.log(new Date().toLocaleString());
+
+  console.log(initialEvents)
 
   const [events, setEvents] = useState<Event[]>(initialEvents);
 
@@ -78,7 +91,8 @@ const Main = () => {
 
 
 
-  useMakeCopilotReadable("The users events are: " + JSON.stringify(events) + "In this string the time is in 24 hour format.");
+  useMakeCopilotReadable("The users events are: " + JSON.stringify(convertToLocaleString(initialEvents)) + "In this string the time is in 24 hour format.");
+  useMakeCopilotReadable("The current time is : " + new Date().toLocaleString());
 
   return (
     <div className="w-screen h-screen">

@@ -27,7 +27,7 @@ export const CalendarComponent: React.FC<Props> = ({ events }: Props) => {
   function renderEventContent(eventInfo: any) {
     console.log(eventInfo.timeText)
     return (
-      <div className="bg-[red]">
+      <div>
         <b>{eventInfo.timeText}m</b>
         <div className='w-[2px]'/>
         <i>{eventInfo.event.title}</i>
