@@ -1,20 +1,13 @@
 import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
 
-interface Event {
-    title: string;
-    start: Date;
-    end: Date;
+import { Event } from '../types'
+
+interface Props {
+  events: Event[];
 }
 
-let events: Event[] = [];
-
-events = [
-    { title: 'Meeting', start: new Date(), end: new Date("2024-05-5") },
-    { title: 'Hello', start: new Date("2024-05-3"), end: new Date("2024-05-5")  }
-  ]
-
-export function CalendarComponent() {
+export const CalendarComponent: React.FC<Props> = ({ events }: Props) => {
     return (
       <div className="w-[60%] h-[60%] z-100">
   
@@ -38,3 +31,4 @@ export function CalendarComponent() {
       </div>
     )
   }
+

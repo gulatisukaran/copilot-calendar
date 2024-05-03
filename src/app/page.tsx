@@ -1,11 +1,7 @@
 "use client";
 import "@copilotkit/react-ui/styles.css";
-
 import { CalendarComponent } from "./components/Calendar";
-
 import React, { useState } from "react";
-import Sidebar from "./components/Sidebar";
-import SingleSpreadsheet from "./components/SingleSpreadsheet";
 import {
   CopilotKit,
   useCopilotAction,
@@ -13,9 +9,10 @@ import {
 } from "@copilotkit/react-core";
 import { CopilotSidebar } from "@copilotkit/react-ui";
 import { INSTRUCTIONS } from "./instructions";
-import { canonicalSpreadsheetData } from "./utils/canonicalSpreadsheetData";
-import { SpreadsheetData } from "./types";
-import { PreviewSpreadsheetChanges } from "./components/PreviewSpreadsheetChanges";
+import { Event } from "./types";
+
+
+
 
 const HomePage = () => {
   return (
@@ -34,12 +31,14 @@ const HomePage = () => {
   );
 };
 
+const initialEvents: Event[] = [
+  { title: 'Meeting', start: new Date(), end: new Date("2024-05-5") },
+  { title: 'Hello', start: new Date("2024-05-3"), end: new Date("2024-05-5")  }
+]
+
 const Main = () => {
 
-  const [events, setEvents] = useState({
-
-  });
-
+  const [events, setEvents] = useState<Event[]>(initialEvents);
 
   // create a copilotAction to create a calendar whenever the user makes a request.
 
@@ -51,20 +50,22 @@ const Main = () => {
         name: "title",
         type: "string",
         description: "The title of the event",
-        attributes: [
-          {
-            name: "cells",
-            type: "object[]",
-            description: "The cells of the row",
-            attributes: [
-              {
-                name: "value",
-                type: "string",
-                description: "The value of the cell",
-              },
-            ],
-          },
-        ],
+        attributes: [{
+          name: "title",
+          type: "string",
+          description: "Name of the event"
+        },
+        {
+          name: "start",
+          type: "date",
+          description: "Date from which the event starts in the calendar. The event can extend for several days."
+        },
+        {
+          name: "end",
+          type: "date",
+          description: "Date at which the event ends in the calendar"
+        },
+      ],
       },
     ],
 
@@ -75,11 +76,11 @@ const Main = () => {
     },
   });
 
-  useMakeCopilotReadable("The users events are: " + events);
+  useMakeCopilotReadable("The users events are: " + JSON.stringify(events));
 
   return (
     <div className="w-screen h-screen">
-      <CalendarComponent />
+      <CalendarComponent events={events}/>
     </div>
   );
 };

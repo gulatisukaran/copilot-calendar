@@ -1,10 +1,5 @@
-export interface Cell {
-  value: string;
-}
-
-export type SpreadsheetRow = Cell[];
-
-export interface SpreadsheetData {
+export interface Event {
   title: string;
-  rows: SpreadsheetRow[];
+  start: Date;
+  end: Date;
 }
